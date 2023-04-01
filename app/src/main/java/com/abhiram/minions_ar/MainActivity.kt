@@ -1,5 +1,6 @@
 package com.abhiram.minions_ar
 
+import android.app.AlertDialog
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +16,7 @@ import java.util.function.Function
 
 
 class MainActivity : AppCompatActivity() {
-    private val arFragment: ArFragment = null
+    private var arFragment: ArFragment = ArFragment()
     private var modelRenderable: ModelRenderable? = null
 
     //3d model credit : google.poly.com
@@ -23,34 +24,51 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment)
+        arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment
+
+        setUpMinion()
+        setUpPlane()
     }
 
-    private fun setUpModel() {
+    fun setUpMinion(){
         ModelRenderable.builder()
-            .setSource(
-                this,
-                RenderableSource.builder().setSource(
-                    this,
-                    Uri.parse(Model_URL),
-                    RenderableSource.SourceType.GLB
-                )
-                    .setScale(0.75f)
-                    .setRecenterMode(RenderableSource.RecenterMode.ROOT)
-                    .build()
-            )
-            .setRegistryId(Model_URL)
+            .setSource(this, R.raw.minion )
+            .setIsFilamentGltf(true)
             .build()
-            .thenAccept(Consumer<ModelRenderable> { renderable: ModelRenderable ->
-                modelRenderable = renderable
-            })
-            .exceptionally(Function<Throwable, Void?> { throwable: Throwable? ->
+            .thenAccept {renderable: ModelRenderable ->
+                modelRenderable = renderable}
+            .exceptionally { throwable: Throwable? ->
                 Log.i("Model", "cant load")
                 Toast.makeText(this@MainActivity, "Model can't be Loaded", Toast.LENGTH_SHORT)
                     .show()
                 null
-            })
+            }
     }
+//    private fun setUpModel() {
+//        ModelRenderable.builder()
+//            .setSource(
+//                this,
+//                RenderableSource.builder().setSource(
+//                    this,
+//                    Uri.parse(Model_URL),
+//                    RenderableSource.SourceType.GLB
+//                )
+//                    .setScale(0.75f)
+//                    .setRecenterMode(RenderableSource.RecenterMode.ROOT)
+//                    .build()
+//            )
+//            .setRegistryId(Model_URL)
+//            .build()
+//            .thenAccept(Consumer<ModelRenderable> { renderable: ModelRenderable ->
+//                modelRenderable = renderable
+//            })
+//            .exceptionally(Function<Throwable, Void?> { throwable: Throwable? ->
+//                Log.i("Model", "cant load")
+//                Toast.makeText(this@MainActivity, "Model can't be Loaded", Toast.LENGTH_SHORT)
+//                    .show()
+//                null
+//            })
+//    }
 
     private fun setUpPlane() {
         arFragment.setOnTapArPlaneListener { hitResult, plane, motionEvent ->
