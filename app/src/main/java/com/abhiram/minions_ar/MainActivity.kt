@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.ar.core.Anchor
@@ -24,10 +25,51 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val gun = this.findViewById<TextView>(R.id.gun)
+        val invento = this.findViewById<TextView>(R.id.invento)
+        val minion = this.findViewById<TextView>(R.id.minion)
+        val mustang = this.findViewById<TextView>(R.id.mustang)
+        val m4 = this.findViewById<TextView>(R.id.m4)
+        val shelby = this.findViewById<TextView>(R.id.shelby)
         arFragment = supportFragmentManager.findFragmentById(R.id.ux_fragment) as ArFragment
-
         setUpMinion()
         setUpPlane()
+        Toast.makeText(applicationContext,"Minion selected",Toast.LENGTH_SHORT).show()
+        gun.setOnClickListener{
+            Toast.makeText(applicationContext,"Gun selected",Toast.LENGTH_SHORT).show()
+            setUpGun()
+            setUpPlane()
+        }
+
+        minion.setOnClickListener {
+            Toast.makeText(applicationContext,"Minion selected",Toast.LENGTH_SHORT).show()
+            setUpMinion()
+            setUpPlane()
+        }
+
+        invento.setOnClickListener {
+            Toast.makeText(applicationContext,"Invento selected",Toast.LENGTH_SHORT).show()
+            setUpInvento()
+            setUpPlane()
+        }
+
+        mustang.setOnClickListener {
+            Toast.makeText(applicationContext,"Mustang selected",Toast.LENGTH_SHORT).show()
+            setUpMustang()
+            setUpPlane()
+        }
+
+        m4.setOnClickListener {
+            Toast.makeText(applicationContext,"M4 selected",Toast.LENGTH_SHORT).show()
+            setUpM4()
+            setUpPlane()
+        }
+        shelby.setOnClickListener {
+            Toast.makeText(applicationContext,"Shelby selected",Toast.LENGTH_SHORT).show()
+            setUpShelby()
+            setUpPlane()
+        }
+
     }
 
     fun setUpMinion(){
@@ -44,31 +86,80 @@ class MainActivity : AppCompatActivity() {
                 null
             }
     }
-//    private fun setUpModel() {
-//        ModelRenderable.builder()
-//            .setSource(
-//                this,
-//                RenderableSource.builder().setSource(
-//                    this,
-//                    Uri.parse(Model_URL),
-//                    RenderableSource.SourceType.GLB
-//                )
-//                    .setScale(0.75f)
-//                    .setRecenterMode(RenderableSource.RecenterMode.ROOT)
-//                    .build()
-//            )
-//            .setRegistryId(Model_URL)
-//            .build()
-//            .thenAccept(Consumer<ModelRenderable> { renderable: ModelRenderable ->
-//                modelRenderable = renderable
-//            })
-//            .exceptionally(Function<Throwable, Void?> { throwable: Throwable? ->
-//                Log.i("Model", "cant load")
-//                Toast.makeText(this@MainActivity, "Model can't be Loaded", Toast.LENGTH_SHORT)
-//                    .show()
-//                null
-//            })
-//    }
+
+    fun setUpM4(){
+        ModelRenderable.builder()
+            .setSource(this, R.raw.classic_m4 )
+            .setIsFilamentGltf(true)
+            .build()
+            .thenAccept {renderable: ModelRenderable ->
+                modelRenderable = renderable}
+            .exceptionally { throwable: Throwable? ->
+                Log.i("Model", "cant load")
+                Toast.makeText(this@MainActivity, "Model can't be Loaded", Toast.LENGTH_SHORT)
+                    .show()
+                null
+            }
+    }
+
+    fun setUpMustang(){
+        ModelRenderable.builder()
+            .setSource(this, R.raw.ford_mustang_shelby_gt500 )
+            .setIsFilamentGltf(true)
+            .build()
+            .thenAccept {renderable: ModelRenderable ->
+                modelRenderable = renderable}
+            .exceptionally { throwable: Throwable? ->
+                Log.i("Model", "cant load")
+                Toast.makeText(this@MainActivity, "Model can't be Loaded", Toast.LENGTH_SHORT)
+                    .show()
+                null
+            }
+    }
+    fun setUpShelby(){
+        ModelRenderable.builder()
+            .setSource(this, R.raw.ford_mustang_shelby_2012 )
+            .setIsFilamentGltf(true)
+            .build()
+            .thenAccept {renderable: ModelRenderable ->
+                modelRenderable = renderable}
+            .exceptionally { throwable: Throwable? ->
+                Log.i("Model", "cant load")
+                Toast.makeText(this@MainActivity, "Model can't be Loaded", Toast.LENGTH_SHORT)
+                    .show()
+                null
+            }
+    }
+
+    fun setUpInvento(){
+        ModelRenderable.builder()
+            .setSource(this, R.raw.invento )
+            .setIsFilamentGltf(true)
+            .build()
+            .thenAccept {renderable: ModelRenderable ->
+                modelRenderable = renderable}
+            .exceptionally { throwable: Throwable? ->
+                Log.i("Model", "cant load")
+                Toast.makeText(this@MainActivity, "Model can't be Loaded", Toast.LENGTH_SHORT)
+                    .show()
+                null
+            }
+    }
+
+    fun setUpGun(){
+        ModelRenderable.builder()
+            .setSource(this, R.raw.gun_edited)
+            .setIsFilamentGltf(true)
+            .build()
+            .thenAccept {renderable: ModelRenderable ->
+                modelRenderable = renderable}
+            .exceptionally { throwable: Throwable? ->
+                Log.i("Model", "cant load")
+                Toast.makeText(this@MainActivity, "Model can't be Loaded", Toast.LENGTH_SHORT)
+                    .show()
+                null
+            }
+    }
 
     private fun setUpPlane() {
         arFragment.setOnTapArPlaneListener { hitResult, plane, motionEvent ->
