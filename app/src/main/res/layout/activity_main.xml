@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <fragment android:name="com.google.ar.sceneform.ux.ArFragment"
+    <io.github.sceneview.ar.ArSceneView android:name="com.google.ar.sceneform.ux.ArFragment"
         android:id="@+id/ux_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -90,6 +90,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mustang"
+                android:fontFamily="@font/poppins"
+                android:textSize="16sp"
+                android:layout_marginRight="5sp"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:paddingTop="8sp"
+                android:paddingBottom="8sp"
+                android:paddingLeft="10sp"
+                android:paddingRight="10sp"/>
+            <TextView
+                android:id="@+id/face"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FaceAR"
                 android:fontFamily="@font/poppins"
                 android:textSize="16sp"
                 android:layout_marginRight="5sp"
